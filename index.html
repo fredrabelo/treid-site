@@ -43,6 +43,15 @@
         .atuacao-bg { background-image: url('images/BACKGROUND-ROXO.jpg'); }
         .bg-main-dark { background-color: var(--main-dark); }
         html { scroll-behavior: smooth; }
+        @media (max-width: 768px) {
+            .banner-arrows {
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            }
+            .banner-arrows.show {
+                opacity: 1;
+            }
+        }
     </style>
 </head>
 <body class="bg-gray-100">
@@ -108,13 +117,13 @@
         </div>
         
         <!-- Setas de navegação -->
-        <button id="prev-btn" class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-3 rounded-full hover:bg-opacity-70 transition-all">
+        <button id="prev-btn" class="banner-arrows absolute left-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-3 rounded-full hover:bg-opacity-70 transition-all">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
             </svg>
         </button>
         
-        <button id="next-btn" class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-3 rounded-full hover:bg-opacity-70 transition-all">
+        <button id="next-btn" class="banner-arrows absolute right-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-3 rounded-full hover:bg-opacity-70 transition-all">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
             </svg>
@@ -330,6 +339,34 @@
         
         document.getElementById('next-btn').addEventListener('click', nextSlide);
         document.getElementById('prev-btn').addEventListener('click', prevSlide);
+        
+        // Mobile banner click to show arrows
+        const bannerSection = document.querySelector('.banner-slide');
+        const arrows = document.querySelectorAll('.banner-arrows');
+        let arrowsVisible = false;
+        
+        function toggleArrows() {
+            if (window.innerWidth <= 768) {
+                arrowsVisible = !arrowsVisible;
+                arrows.forEach(arrow => {
+                    if (arrowsVisible) {
+                        arrow.classList.add('show');
+                    } else {
+                        arrow.classList.remove('show');
+                    }
+                });
+                
+                if (arrowsVisible) {
+                    setTimeout(() => {
+                        arrowsVisible = false;
+                        arrows.forEach(arrow => arrow.classList.remove('show'));
+                    }, 3000);
+                }
+            }
+        }
+        
+        document.getElementById('banner-1').addEventListener('click', toggleArrows);
+        document.getElementById('banner-2').addEventListener('click', toggleArrows);
         
         // Mobile menu toggle
         document.getElementById('mobile-menu-btn').addEventListener('click', function() {

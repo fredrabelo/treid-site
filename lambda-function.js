@@ -81,6 +81,7 @@ export const handler = async (event) => {
             Source: 'contato@treid.com.br' // Must be verified in SES
         };
         
+        
         console.log('SES params:', JSON.stringify(params, null, 2));
         // Send email
         const command = new SendEmailCommand(params);
@@ -91,7 +92,7 @@ export const handler = async (event) => {
         return {
             statusCode: 200,
             headers: corsHeaders,
-            body: JSON.stringify({ message: 'Email enviado com sucesso!' })
+            body: JSON.stringify({ message: 'Email sent successfully' })
         };
         
     } catch (error) {
@@ -99,7 +100,7 @@ export const handler = async (event) => {
         return {
             statusCode: 500,
             headers: corsHeaders,
-            body: JSON.stringify({ error: 'Falha ao enviar email!' })
+            body: JSON.stringify({ error: 'Failed to send email' })
         };
     }
 };
